@@ -170,3 +170,14 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value)
 {    
     pGPIOx->ODR |= Value;
 }
+
+/**
+ * @brief  This function toggles the state of a specific GPIO output pin.
+ * @param  pGPIOx: Pointer to the GPIO port (e.g., GPIOA, GPIOB, etc.)
+ * @param  PinNumber: The pin number to toggle (0-15)
+ * @retval None
+ */
+void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
+{    
+    pGPIOx->ODR ^= (1 << PinNumber);
+}
