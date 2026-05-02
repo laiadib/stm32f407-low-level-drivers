@@ -137,6 +137,6 @@ uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
 {
     uint16_t value;
-    value = (uint16_t)(pGPIOx->IDR & 0x0000FFFF); // Read the entire input data register and mask out the upper bits
+    value = (uint16_t)(pGPIOx->IDR);
     return value;
 }
