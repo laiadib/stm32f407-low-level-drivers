@@ -50,41 +50,43 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
 /* Initialization and De-initialization */
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 {
+    // 1. Enable the peripheral clock
+     GPIO_PeriClockControl(pGPIOHandle->pGPIOx, ENABLE);
 
+    // 2. Configure the mode of the GPIO pin
+    if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG) // Non-interrupt mode
+    {
+        pGPIOHandle->pGPIOx->MODER &= ~(0x3 << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber)); // Clear the bits
+        pGPIOHandle->pGPIOx->MODER |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber ) ); // Set the bits
+    }
+    else // Interrupt mode
+    {
+        // TODO: Configure interrupt mode
+    }
+
+    // 3. Configure the speed
+    pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3 << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber)); // Clear the bits
+    pGPIOHandle->pGPIOx->OSPEEDR |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinSpeed << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber ) ); // Set the bits
+
+    // 4. Configure the pupd settings
+    pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber)); // Clear the bits
+    pGPIOHandle->pGPIOx->PUPDR |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinPuPdControl << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber ) ); // Set the bits
+
+    // 5. Configure the optype
+    pGPIOHandle->pGPIOx->OTYPER &= ~(0x1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber); // Clear the bit
+    pGPIOHandle->pGPIOx->OTYPER |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinOPType << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber ); // Set the bit
+
+    // 6. Configure the alternate functionality
+    if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_ALTFN)
+    {
+        uint8_t afrIndex, afrBitPos;
+        afrIndex  = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 8; // Determine AFR[0] or AFR[1]
+        afrBitPos = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 8; // Determine the position within the AFR register
+        pGPIOHandle->pGPIOx->AFR[afrIndex] &= ~(0xF << (4 * afrBitPos)); // Clear the bits
+        pGPIOHandle->pGPIOx->AFR[afrIndex] |= (pGPIOHandle->GPIO_PinConfig.GPIO_PinAltFunMode << (4 * afrBitPos)); // Set the bits
+    }
+    
 }
-void GPIO_DeInit(GPIO_RegDef_t *pGPIOx)
-{
 
-}
 
-/* Data read and write */
-uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
-{
 
-}
-uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
-{
-
-}
-void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t Value)
-{
-
-}
-void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value)  
-{
-
-}
-void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
-{
-
-}
-
-/* IRQ configuration and handling */
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnorDi)
-{
-
-}
-void GPIO_IRQHandling(uint8_t IRQNumber)
-{
-
-}
