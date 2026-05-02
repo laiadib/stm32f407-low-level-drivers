@@ -48,6 +48,14 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
 }
 
 /* Initialization and De-initialization */
+/**
+ * @brief  Initializes the GPIO pin according to the configuration in the handle.
+ * @note   Enables the peripheral clock automatically, then configures mode,
+ *         speed, pull-up/pull-down, output type, and alternate function.
+ * @param  pGPIOHandle: Pointer to the GPIO handle containing the port base
+ *                      address and the pin configuration settings
+ * @retval None
+ */
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 {
     // 1. Enable the peripheral clock
@@ -108,7 +116,12 @@ void GPIO_DeInit(GPIO_RegDef_t *pGPIOx)
     }
 }
 
-
+/**
+ * @brief  This function reads the state of a specific GPIO pin.
+ * @param  pGPIOx: Pointer to the GPIO port (e.g., GPIOA, GPIOB, etc.)
+ * @param  PinNumber: The pin number to read (0-15)
+ * @retval The state of the pin (0 or 1)
+ */
 uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
 {
     uint8_t value;
@@ -116,6 +129,11 @@ uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber)
     return value;
 } 
 
+/**
+ * @brief  This function reads the state of all 16 pins of a GPIO port at once.
+ * @param  pGPIOx: Pointer to the GPIO port (e.g., GPIOA, GPIOB, etc.)
+ * @retval 16-bit value representing the state of all pins (bit 0 = pin 0, bit 15 = pin 15)
+ */
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
 {
     uint16_t value;
