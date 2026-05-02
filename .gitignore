@@ -1,0 +1,12 @@
+# Build output
+Debug/
+Release/
+build/
+
+# STM32CubeIDE generated/IDE files
+.settings/
+.cproject
+.project
+
+# Eclipse/IDE metadata
+.metadata/
