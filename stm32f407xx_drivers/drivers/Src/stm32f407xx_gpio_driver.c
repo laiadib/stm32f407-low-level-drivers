@@ -140,3 +140,22 @@ uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx)
     value = (uint16_t)(pGPIOx->IDR);
     return value;
 }
+
+/**
+ * @brief  This function writes a value to a specific GPIO output pin.
+ * @param  pGPIOx: Pointer to the GPIO port (e.g., GPIOA, GPIOB, etc.)
+ * @param  PinNumber: The pin number to write to (0-15)
+ * @param  Value: The value to write (GPIO_PIN_SET or GPIO_PIN_RESET)
+ * @retval None
+ */
+void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t Value)
+{
+    if(Value == GPIO_PIN_SET)
+    {
+        pGPIOx->ODR |= (1 << PinNumber);
+    }
+    else
+    {
+        pGPIOx->ODR &= ~(1 << PinNumber);
+    }
+}
