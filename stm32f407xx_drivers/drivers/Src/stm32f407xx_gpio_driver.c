@@ -89,4 +89,23 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 }
 
 
+void GPIO_DeInit(GPIO_RegDef_t *pGPIOx)
+{
+    uint8_t portIndex = ((uint32_t)pGPIOx - (uint32_t)GPIOA) / 0x400;
+
+    switch(portIndex)
+    {
+        case 0: GPIOA_REG_RESET(); break;
+        case 1: GPIOB_REG_RESET(); break;
+        case 2: GPIOC_REG_RESET(); break;
+        case 3: GPIOD_REG_RESET(); break;
+        case 4: GPIOE_REG_RESET(); break;
+        case 5: GPIOF_REG_RESET(); break;
+        case 6: GPIOG_REG_RESET(); break;
+        case 7: GPIOH_REG_RESET(); break;
+        case 8: GPIOI_REG_RESET(); break;
+        default: break;
+    }
+}
+
 
