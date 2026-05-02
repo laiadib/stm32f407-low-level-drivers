@@ -159,3 +159,14 @@ void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t Val
         pGPIOx->ODR &= ~(1 << PinNumber);
     }
 }
+
+/**
+ * @brief  This function writes a 16-bit value to all output pins of a GPIO port at once.
+ * @param  pGPIOx: Pointer to the GPIO port (e.g., GPIOA, GPIOB, etc.)
+ * @param  Value: The 16-bit value to write (bit 0 = pin 0, bit 15 = pin 15)
+ * @retval None
+ */
+void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value)
+{    
+    pGPIOx->ODR |= Value;
+}
