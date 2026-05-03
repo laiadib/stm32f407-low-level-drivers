@@ -10,19 +10,25 @@
 #include "stm32f407xx_gpio_driver.h"
 
 /* ============================================================
- * APP: LED_TOGGLE
+ * Common helpers
  * ============================================================ */
-#if APP_SELECTED == APP_LED_TOGGLE
-
 static void delay(uint32_t ms, uint32_t clk_mhz)
 {
     uint32_t cycles = (uint32_t)((ms * (clk_mhz * 1000)) / 5);
     for(uint32_t i = 0; i < cycles; i++);
 }
 
+/* ============================================================
+ * APP: LED_TOGGLE
+ * ============================================================ */
+#if APP_SELECTED == APP_LED_TOGGLE
+
 static void LED_Toggle_App(void)
 {
     GPIO_Handle_t GPIO_LED;
+
+    MEMSET(&GPIO_LED, 0, sizeof(GPIO_Handle_t));
+
     GPIO_LED.pGPIOx = GPIOD;
     GPIO_LED.GPIO_PinConfig.GPIO_PinNumber      = GPIO_PIN_NO_12;
     GPIO_LED.GPIO_PinConfig.GPIO_PinMode        = GPIO_MODE_OUT;
@@ -46,15 +52,13 @@ static void LED_Toggle_App(void)
  * ============================================================ */
 #elif APP_SELECTED == APP_LED_TOGGLE_BUTTON
 
-static void delay(uint32_t ms, uint32_t clk_mhz)
-{
-    uint32_t cycles = (uint32_t)((ms * (clk_mhz * 1000)) / 5);
-    for(uint32_t i = 0; i < cycles; i++);
-}
-
 static void LED_Toggle_Button_App(void)
 {
     GPIO_Handle_t GPIO_LED, GPIO_BUTTON;
+
+    MEMSET(&GPIO_LED, 0, sizeof(GPIO_Handle_t));
+    MEMSET(&GPIO_BUTTON, 0, sizeof(GPIO_Handle_t));
+
     GPIO_LED.pGPIOx = GPIOD;
     GPIO_LED.GPIO_PinConfig.GPIO_PinNumber      = GPIO_PIN_NO_12;
     GPIO_LED.GPIO_PinConfig.GPIO_PinMode        = GPIO_MODE_OUT;
@@ -82,6 +86,50 @@ static void LED_Toggle_Button_App(void)
 }
 
 #define USER_APP_RUN() LED_Toggle_Button_App()
+
+/* ============================================================
+ * APP: LED_TOGGLE_BUTTON_IT
+ * ============================================================ */
+#elif APP_SELECTED == APP_LED_TOGGLE_BUTTON_IT
+
+static void LED_Toggle_Button_IT_App(void)
+{
+    GPIO_Handle_t GPIO_LED, GPIO_BUTTON;
+
+    MEMSET(&GPIO_LED, 0, sizeof(GPIO_Handle_t));
+    MEMSET(&GPIO_BUTTON, 0, sizeof(GPIO_Handle_t));
+
+    GPIO_LED.pGPIOx = GPIOD;
+    GPIO_LED.GPIO_PinConfig.GPIO_PinNumber      = GPIO_PIN_NO_12;
+    GPIO_LED.GPIO_PinConfig.GPIO_PinMode        = GPIO_MODE_OUT;
+    GPIO_LED.GPIO_PinConfig.GPIO_PinSpeed       = GPIO_SPEED_LOW;
+    GPIO_LED.GPIO_PinConfig.GPIO_PinOPType      = GPIO_OP_TYPE_PP;
+    GPIO_LED.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+    GPIO_BUTTON.pGPIOx = GPIOA;
+    GPIO_BUTTON.GPIO_PinConfig.GPIO_PinNumber      = GPIO_PIN_NO_0;
+    GPIO_BUTTON.GPIO_PinConfig.GPIO_PinMode        = GPIO_MODE_IT_FT;
+    GPIO_BUTTON.GPIO_PinConfig.GPIO_PinSpeed       = GPIO_SPEED_LOW;
+    GPIO_BUTTON.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+    GPIO_Init(&GPIO_LED);
+    GPIO_Init(&GPIO_BUTTON);
+
+    // GPIO_IRQPriorityConfig(IRQ_NO_EXTI0, NVIC_IRQ_PRI15); // this is optional, as we have only one interrupt.
+    GPIO_IRQInterruptConfig(IRQ_NO_EXTI0, ENABLE);
+
+    while(1);
+
+}
+
+void EXTI0_IRQHandler(void)
+{
+    delay(200, 16); /* 200 ms delay at 16 MHz HSI */
+    GPIO_IRQHandling(GPIO_PIN_NO_0); // clear the EXTI line pending bit
+    GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+}
+
+#define USER_APP_RUN() LED_Toggle_Button_IT_App()
 
 /* ============================================================
  * APP: NONE — explicit no-op, runs an empty infinite loop

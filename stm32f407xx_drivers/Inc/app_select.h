@@ -8,12 +8,13 @@
 #ifndef APP_SELECT_H
 #define APP_SELECT_H
 
-#define APP_NONE                0U
-#define APP_LED_TOGGLE          1U
-#define APP_LED_TOGGLE_BUTTON   2U
+#define APP_NONE                    0U
+#define APP_LED_TOGGLE              1U
+#define APP_LED_TOGGLE_BUTTON       2U
+#define APP_LED_TOGGLE_BUTTON_IT    3U
 
 
 /* Select exactly one application */
-#define APP_SELECTED APP_LED_TOGGLE_BUTTON
+#define APP_SELECTED APP_LED_TOGGLE_BUTTON_IT
 
 #endif /* APP_SELECT_H */
