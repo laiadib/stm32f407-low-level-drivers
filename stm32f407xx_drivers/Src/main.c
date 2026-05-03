@@ -24,10 +24,9 @@
 
 int main(void)
 {
-    /* Choose the application to run */
-    // LED_Toggle_App();
+  UserApp_Run();
 
-    /* Empty infinite loop if no application is chosen */
-    // for(;;);
-    return 0;
+  for(;;)
+  {
+  }
 }

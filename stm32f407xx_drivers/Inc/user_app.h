@@ -8,6 +8,6 @@
 #ifndef USER_APP_H
 #define USER_APP_H
 
-#include "led_toggle.h"
+void UserApp_Run(void);
 
 #endif /* USER_APP_H */

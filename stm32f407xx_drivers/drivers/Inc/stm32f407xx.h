@@ -199,7 +199,7 @@ typedef struct
 #define USART3_PCLK_EN() (RCC->APB1ENR |= (1 << 18))   /* Enable clock for USART3 */
 #define UART4_PCLK_EN()  (RCC->APB1ENR |= (1 << 19))   /* Enable clock for UART4 */
 #define UART5_PCLK_EN()  (RCC->APB1ENR |= (1 << 20))   /* Enable clock for UART5 */
-#define USART6_PCLK_EN() (RCC->APB1ENR |= (1 << 5))    /* Enable clock for USART6 */
+#define USART6_PCLK_EN() (RCC->APB2ENR |= (1 << 5))    /* Enable clock for USART6 */
 
 /* Clock Disable Macros for USARTx peripherals */
 #define USART1_PCLK_DI() (RCC->APB2ENR &= ~(1 << 4))    /* Disable clock for USART1 */
@@ -207,7 +207,7 @@ typedef struct
 #define USART3_PCLK_DI() (RCC->APB1ENR &= ~(1 << 18))   /* Disable clock for USART3 */
 #define UART4_PCLK_DI()  (RCC->APB1ENR &= ~(1 << 19))   /* Disable clock for UART4 */
 #define UART5_PCLK_DI()  (RCC->APB1ENR &= ~(1 << 20))   /* Disable clock for UART5 */
-#define USART6_PCLK_DI() (RCC->APB1ENR &= ~(1 << 5))    /* Disable clock for USART6 */
+#define USART6_PCLK_DI() (RCC->APB2ENR &= ~(1 << 5))    /* Disable clock for USART6 */
 
 
 /* Clock Enable Macros for SYSCFG peripheral */
