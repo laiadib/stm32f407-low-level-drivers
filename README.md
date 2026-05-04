@@ -1,6 +1,6 @@
 # stm32f407-low-level-drivers
 
-Low-level peripheral drivers for the STM32F407xx microcontrollers, written without HAL or CMSIS drivers.
+Low-level peripheral drivers for the STM32F407xx microcontrollers, written without vendor abstraction layers.
 
 ## Target Hardware
 - **MCU:** STM32F407xx 
