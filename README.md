@@ -1,4 +1,4 @@
-# stm32f407-low-level-drivers
+# STM32F407 Low-level Drivers
 
 Low-level peripheral drivers for the STM32F407xx microcontrollers, written without vendor abstraction layers.
 
