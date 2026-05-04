@@ -18,9 +18,12 @@ stm32f407xx_drivers/
 ```
 
 ## Implemented Drivers
-| Peripheral | Status |
-|------------|--------|
-| GPIO       | Done   |
+| Peripheral | Status      |
+|------------|-------------|
+| GPIO       | Completed   |
+| SPI        | In Progress |
+| I2C        | Backlog     |
+| USART      | Backlog     |
 
 ## GPIO Driver API
 
