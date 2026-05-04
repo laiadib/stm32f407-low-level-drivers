@@ -115,7 +115,7 @@ static void LED_Toggle_Button_IT_App(void)
     GPIO_Init(&GPIO_LED);
     GPIO_Init(&GPIO_BUTTON);
 
-    // GPIO_IRQPriorityConfig(IRQ_NO_EXTI0, NVIC_IRQ_PRI15); // this is optional, as we have only one interrupt.
+    GPIO_IRQPriorityConfig(IRQ_NO_EXTI0, NVIC_IRQ_PRI15); // this is optional, as we have only one interrupt.
     GPIO_IRQInterruptConfig(IRQ_NO_EXTI0, ENABLE);
 
     while(1);

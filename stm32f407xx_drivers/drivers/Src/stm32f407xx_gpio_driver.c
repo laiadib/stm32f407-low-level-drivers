@@ -268,7 +268,7 @@ void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority)
     uint8_t iprx = IRQNumber / 4; // Determine which IPR register to use
     uint8_t iprxSection = IRQNumber % 4; // Determine the section within the IPR register
     uint8_t shiftAmount = (8 * iprxSection) + (8 - NO_PR_BITS_IMPLEMENTED); // Calculate the shift amount based on the number of priority bits implemented
-    *(NVIC_IPR_BASEADDR + iprx * 4) |= (IRQPriority << shiftAmount); // Set the priority
+    *(NVIC_IPR_BASEADDR + iprx) |= (IRQPriority << shiftAmount); // Set the priority
 }
 
 void GPIO_IRQHandling(uint8_t PinNumber)
