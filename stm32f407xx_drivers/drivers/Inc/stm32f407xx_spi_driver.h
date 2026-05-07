@@ -67,14 +67,25 @@ typedef struct
 
 /* Macros for SPI software slave management */
 /* @SPI_SSM */
-#define SPI_SSM_EN  0
-#define SPI_SSM_DI  1
+#define SPI_SSM_EN  1
+#define SPI_SSM_DI  0
 
 /* API supported by this driver */
 
 /* Peripheral Clock setup */
 void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
 
+/* Initialization and De-initialization */
+void SPI_Init(SPI_Handle_t *pSPIHandle);
+void SPI_DeInit(SPI_RegDef_t *pSPIx);
 
+/* Data Send and Receive */
+void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len);
+void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len);
+
+/* IRQ Configuration and ISR handling */
+void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
+void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
+void SPI_IRQHandling(SPI_Handle_t *pHandle);
 
 #endif /* STM32F407XX_SPI_DRIVER_H */
