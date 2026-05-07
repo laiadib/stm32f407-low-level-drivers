@@ -75,8 +75,11 @@
 
 /* Base addresses of peripherals of APB2 Bus*/
 #define SPI1_BASEADDR			(APB2PERIPH_BASEADDR + 0x3000U)
+#define SPI4_BASEADDR			(APB2PERIPH_BASEADDR + 0x3400U)
+
 #define USART1_BASEADDR		    (APB2PERIPH_BASEADDR + 0x1000U)
 #define USART6_BASEADDR		    (APB2PERIPH_BASEADDR + 0x1400U)
+
 #define EXTI_BASEADDR			(APB2PERIPH_BASEADDR + 0x3C00U)
 #define SYSCFG_BASEADDR			(APB2PERIPH_BASEADDR + 0x3800U)
 
@@ -160,6 +163,21 @@ typedef struct
 } SYSCFG_RegDef_t;
 
 
+/* SPI Peripheral Structure */
+typedef struct
+{
+    __vo uint32_t CR1;              /* Control register 1,                         Address offset: 0x00 */
+    __vo uint32_t CR2;              /* Control register 2,                         Address offset: 0x04 */
+    __vo uint32_t SR;               /* Status register,                            Address offset: 0x08 */
+    __vo uint32_t DR;               /* Data register,                              Address offset: 0x0C */
+    __vo uint32_t CRCPR;            /* CRC polynomial register,                     Address offset: 0x10 */
+    __vo uint32_t RXCRCR;           /* RX CRC register,                             Address offset: 0x14 */
+    __vo uint32_t TXCRCR;           /* TX CRC register,                             Address offset: 0x18 */
+    __vo uint32_t I2SCFGR;          /* I2S configuration register,                  Address offset: 0x1C */
+    __vo uint32_t I2SPR;            /* I2S prescaler register,                      Address offset: 0x20 */
+} SPI_RegDef_t;
+
+
 /* GPIO Peripheral Definitions */
 #define GPIOA               ((GPIO_RegDef_t*)GPIOA_BASEADDR)
 #define GPIOB               ((GPIO_RegDef_t*)GPIOB_BASEADDR)
@@ -180,6 +198,15 @@ typedef struct
 
 /* SYSCFG Peripheral Definitions */
 #define SYSCFG               ((SYSCFG_RegDef_t*)SYSCFG_BASEADDR)
+
+
+/* SPI Peripheral Definitions */
+#define SPI1               ((SPI_RegDef_t*)SPI1_BASEADDR)
+#define SPI2               ((SPI_RegDef_t*)SPI2_BASEADDR)
+#define SPI3               ((SPI_RegDef_t*)SPI3_BASEADDR)
+#define SPI4               ((SPI_RegDef_t*)SPI4_BASEADDR)
+
+
 
 /* Clock Enable Macros for GPIOx peripherals */
 #define GPIOA_PCLK_EN()  (RCC->AHB1ENR |= (1 << 0))   /* Enable clock for GPIOA */
@@ -236,6 +263,12 @@ typedef struct
 #define SPI2_PCLK_DI()  (RCC->APB1ENR &= ~(1 << 14))   /* Disable clock for SPI2 */
 #define SPI3_PCLK_DI()  (RCC->APB1ENR &= ~(1 << 15))   /* Disable clock for SPI3 */
 #define SPI4_PCLK_DI()  (RCC->APB2ENR &= ~(1 << 13))   /* Disable clock for SPI4 */
+
+/* Macros to reset SPIx peripherals */
+#define SPI1_REG_RESET()   do{ (RCC->APB2RSTR |= (1 << 12));  (RCC->APB2RSTR &= ~(1 << 12)); }while(0)  /* Reset SPI1 */
+#define SPI2_REG_RESET()   do{ (RCC->APB1RSTR |= (1 << 14));  (RCC->APB1RSTR &= ~(1 << 14)); }while(0)  /* Reset SPI2 */
+#define SPI3_REG_RESET()   do{ (RCC->APB1RSTR |= (1 << 15));  (RCC->APB1RSTR &= ~(1 << 15)); }while(0)  /* Reset SPI3 */
+#define SPI4_REG_RESET()   do{ (RCC->APB2RSTR |= (1 << 13));  (RCC->APB2RSTR &= ~(1 << 13)); }while(0)  /* Reset SPI4 */
 
 
 /* Clock Enable Macros for USARTx peripherals */
