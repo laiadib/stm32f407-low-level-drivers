@@ -70,6 +70,11 @@ typedef struct
 #define SPI_SSM_EN  1
 #define SPI_SSM_DI  0
 
+/* Macros for SPI 1-line bidirectional direction */
+/* @SPI_BIDIRECTIONAL_LINE */
+#define SPI_BIDIRECTIONAL_LINE_RX 0
+#define SPI_BIDIRECTIONAL_LINE_TX 1
+
 /* API supported by this driver */
 
 /* Peripheral Clock setup */
@@ -87,5 +92,10 @@ void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len);
 void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
 void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
 void SPI_IRQHandling(SPI_Handle_t *pHandle);
+
+/* Other peripheral control APIs */
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
+void SPI_SetHalfDuplexDirection(SPI_RegDef_t *pSPIx, uint8_t TxOrRx);
 
 #endif /* STM32F407XX_SPI_DRIVER_H */

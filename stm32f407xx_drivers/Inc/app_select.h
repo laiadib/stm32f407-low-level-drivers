@@ -12,9 +12,10 @@
 #define APP_LED_TOGGLE              1U
 #define APP_LED_TOGGLE_BUTTON       2U
 #define APP_LED_TOGGLE_BUTTON_IT    3U
+#define APP_SPI_HALF_DUPLEX_TX      4U
 
 
 /* Select exactly one application */
-#define APP_SELECTED APP_LED_TOGGLE_BUTTON_IT
+#define APP_SELECTED APP_SPI_HALF_DUPLEX_TX
 
 #endif /* APP_SELECT_H */
