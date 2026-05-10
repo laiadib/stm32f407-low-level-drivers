@@ -340,19 +340,27 @@ typedef struct
 /* MEMSET macro */
 #define MEMSET(ptr, val, len)  memset((ptr), (val), (len))
 
-/* SPI Macros */
-#define SPI_CR1_CPHA    0
-#define SPI_CR1_CPOL    1
-#define SPI_CR1_MSTR    2
-#define SPI_CR1_BR      3
-#define SPI_CR1_SPE     6
-#define SPI_CR1_LSBFIRST 7
-#define SPI_CR1_SSI     8
-#define SPI_CR1_SSM     9
-#define SPI_CR1_RXONLY  10
-#define SPI_CR1_DFF     11
-#define SPI_CR1_BIDIOE  14
-#define SPI_CR1_BIDIMODE 15
+/* SPI CR1 bit position macros */
+#define SPI_CR1_CPHA      0
+#define SPI_CR1_CPOL      1
+#define SPI_CR1_MSTR      2
+#define SPI_CR1_BR        3
+#define SPI_CR1_SPE       6
+#define SPI_CR1_LSBFIRST  7
+#define SPI_CR1_SSI       8
+#define SPI_CR1_SSM       9
+#define SPI_CR1_RXONLY    10
+#define SPI_CR1_DFF       11
+#define SPI_CR1_BIDIOE    14
+#define SPI_CR1_BIDIMODE  15
+
+/* SPI CR2 bit position macros */
+#define SPI_CR2_SSOE      2
+
+/* SPI SR bit position macros */
+#define SPI_SR_RXNE       0
+#define SPI_SR_TXE        1
+#define SPI_SR_BSY        7
 
 
 #endif /* INC_STM32F407XX_H_ */

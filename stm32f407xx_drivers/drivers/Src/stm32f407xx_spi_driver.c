@@ -114,7 +114,7 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len)
     while(Len > 0)
     {
         // Wait until TXE (Transmit buffer empty) flag is set
-        while(!(pSPIx->SR & (1 << 1))); // 1: Tx buffer empty, 0: Tx buffer not empty
+        while(!(pSPIx->SR & (1 << SPI_SR_TXE))); // 1: Tx buffer empty, 0: Tx buffer not empty
 
         // Check the DFF (Data Frame Format) bit in CR1
         if(pSPIx->CR1 & (1 << SPI_CR1_DFF))
@@ -134,7 +134,8 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len)
     }
 
     // Wait until SPI is not busy
-    while(pSPIx->SR & (1 << 7));
+    while(SPI_GetFlagStatus(pSPIx, SPI_SR_BSY));
+    
 }
 
 
@@ -194,4 +195,26 @@ void SPI_SetHalfDuplexDirection(SPI_RegDef_t *pSPIx, uint8_t TxOrRx)
     {
         pSPIx->CR1 &= ~(1 << SPI_CR1_BIDIOE); // Release the single data line for input
     }
+}
+
+void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
+{
+    if(EnorDi == ENABLE)
+    {
+        pSPIx->CR2 |= (1 << SPI_CR2_SSOE); // Set the SSOE bit to enable NSS output
+    }
+    else
+    {
+        pSPIx->CR2 &= ~(1 << SPI_CR2_SSOE); // Clear the SSOE bit to disable NSS output
+    }
+}
+
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName)
+{
+    if(pSPIx->SR & (1 << FlagName))
+    {
+        return SET;
+    }
+
+    return RESET;
 }
